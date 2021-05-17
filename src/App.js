@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route, Link } from 'react-router-dom';
 import './App.css';
 
 import todosList from './todos.json';
@@ -76,18 +77,53 @@ class App extends Component {
             autoFocus
           />
         </header>
-        <TodoList
-          todos={this.state.todos}
-          handleToggleCheckbox={this.handleToggleCheckbox}
-          handleDeleteTodo={this.handleDeleteTodo}
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <TodoList
+              todos={this.state.todos}
+              handleToggleCheckbox={this.handleToggleCheckbox}
+              handleDeleteTodo={this.handleDeleteTodo}
+            />
+          )}
+        />
+        <Route
+          path="/active"
+          render={() => (
+            <TodoList
+              todos={this.state.todos.filter(
+                (todo) => todo.completed === false
+              )}
+              handleToggleCheckbox={this.handleToggleCheckbox}
+            />
+          )}
+        />
+        <Route
+          path="/completed"
+          render={() => (
+            <TodoList
+              todos={this.state.todos.filter((todo) => todo.completed === true)}
+              handleToggleCheckbox={this.handleToggleCheckbox}
+            />
+          )}
         />
         <footer className="footer">
           <span className="todo-count">
             <strong>0</strong> item(s) left
           </span>
-          <button className="clear-completed" onClick={this.handleClearAll}>
-            Clear completed
-          </button>
+          <ul className="filters">
+            <li>
+              <Link to="/">All</Link>
+            </li>
+            <li>
+              <Link to="/active">Active</Link>
+            </li>
+            <li>
+              <Link to="/completed">Completed</Link>
+            </li>
+          </ul>
+          <button className="clear-completed">Clear completed</button>
         </footer>
       </section>
     );
