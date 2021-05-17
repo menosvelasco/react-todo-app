@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 import './App.css';
 
 import todosList from './todos.json';
@@ -96,6 +96,7 @@ class App extends Component {
                 (todo) => todo.completed === false
               )}
               handleToggleCheckbox={this.handleToggleCheckbox}
+              handleDeleteTodo={this.handleDeleteTodo}
             />
           )}
         />
@@ -105,6 +106,7 @@ class App extends Component {
             <TodoList
               todos={this.state.todos.filter((todo) => todo.completed === true)}
               handleToggleCheckbox={this.handleToggleCheckbox}
+              handleDeleteTodo={this.handleDeleteTodo}
             />
           )}
         />
@@ -114,13 +116,19 @@ class App extends Component {
           </span>
           <ul className="filters">
             <li>
-              <Link to="/">All</Link>
+              <NavLink exact to="/" activeClassName="selected">
+                All
+              </NavLink>
             </li>
             <li>
-              <Link to="/active">Active</Link>
+              <NavLink to="/active" activeClassName="selected">
+                Active
+              </NavLink>
             </li>
             <li>
-              <Link to="/completed">Completed</Link>
+              <NavLink to="/completed" activeClassName="selected">
+                Completed
+              </NavLink>
             </li>
           </ul>
           <button className="clear-completed">Clear completed</button>
